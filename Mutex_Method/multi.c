@@ -83,7 +83,7 @@ int main(){
 void*update(void*data){
 	printf("\n------------------------------\nUpdate Process Start\n");
 	pthread_mutex_lock(&a_mutex);
-	printf("Thread 1 lock\n");
+	printf("Thread %d lock\n", pthread_self());
 	printf("Student Name: %s\n",strcpy(student1.name, "Pham Quoc Trung"));
 	printf("Student ID: %llu\n", student1.id = 20172875);
 	printf("Student CPA: %f\n",student1.cpa = 3.32);
@@ -91,7 +91,7 @@ void*update(void*data){
 	printf("Student All Credit Passed: %d\n", student1.credit_pass = 100);
 	printf("Student Tutor Fee: %llu\n", student1.tutor_fee = 12000000);
 	sleep(1);
-	printf("Thread 1 unlock\n");
+	printf("Thread %d unlock\n", pthread_self());
 	printf("Update Process Complete!\n------------------------------\n");
 	pthread_mutex_unlock(&a_mutex);
 }	
@@ -101,7 +101,7 @@ void*update(void*data){
 void*send_email(void*data){
 	pthread_mutex_lock(&a_mutex);
 	printf("Sending Email\n");
-	printf("Thread 2 lock.\n");
+	printf("Thread %d lock.\n", pthread_self());
 	char cmd[100];  			// to hold the command.
     char body[MAX_LENGTH] = "Hi ";   	 // email body.
     //Generate message
@@ -117,7 +117,7 @@ void*send_email(void*data){
     fclose(fp1);       				// close file
     sprintf(cmd,"sendmail %s < %s",MAIL,tempFile); // prepare command.
     system(cmd);     				// execute it.
-    printf("Thread 2 unlock.\n");
+    printf("Thread %d unlock.\n", pthread_self());
  	printf("Email sent successfully\n");
 	pthread_exit(NULL);
 }
